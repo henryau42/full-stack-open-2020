@@ -1,0 +1,31 @@
+title New Note
+
+actor User
+
+User->Browser: User writes information into text input field
+
+note over Browser:
+Submit button clicked
+end note
+
+Browser->Server: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note
+Server-->Browser: Status 302 URL Redirect
+Browser->Server: HTTP GET https://fullstack-exampleapp.herokuapp.com/notes
+Server-->Browser: HTTP-code
+Browser->Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+Server-->Browser: main.css
+Browser->Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+Server-->Browser: main.js
+
+note over Browser:
+Browser starts executing js-code
+that requests JSON data from server
+end note
+
+Browser->Server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+Server-->Browser: [{ content: "blargh", date: "2020-12-21" }, ...]
+
+note over Browser:
+Browser executes the event handler
+that renders notes to display
+end note
