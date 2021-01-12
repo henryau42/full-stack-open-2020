@@ -7,42 +7,54 @@ const Header = (props) => {
     )
 }
 
-const Content = (props) => {
-    const parts1 = props.parts[0]
-    const parts2 = props.parts[1]
-    const parts3 = props.parts[2]
+const Statistics = (props) => {
+    const good = props.stats[0]
+    const neutral = props.stats[1]
+    const bad = props.stats[2]
+    const total = good.value + neutral.value + bad.value
+
+    if (total === 0) {
+        return (
+            <div>
+                No feedback given
+            </div>
+        )
+    }
+
+    const sum = good.value - bad.value
+    const avg = total > 0 ? (sum / total) : 0
+    const percent = total > 0 ? (good.value / total) * 100 : 0
 
     return (
-        <div>
-            <Part part={parts1.feedback} count={parts1.count} />
-            <Part part={parts2.feedback} count={parts2.count} />
-            <Part part={parts3.feedback} count={parts3.count} />
-        </div>
+        <table>
+            <tbody>
+                <Statistic text={good.text} value={good.value} />
+                <Statistic text={neutral.text} value={neutral.value} />
+                <Statistic text={bad.text} value={bad.value} />
+                <Statistic text='all' value={total} />
+                <Statistic text='average' value={avg} />
+                <Statistic text='positive' value={percent + ' %'} />
+            </tbody>
+        </table>
     )
 }
 
-const Part = (props) => {
+const Statistic = (props) => {
     return (
-        <div>
-            {props.part} {props.count}
-        </div>
+        <tr>
+            <td> {props.text} </td>
+            <td> {props.value} </td>
+        </tr>
     )
 }
 
 const Button = (props) => {
-
     return (
-        <button>
+        <button onClick={props.handleClick}>
             {props.text}
         </button>
     )
 }
-
-// const Button = ({ onClick, text }) => (
-//     <button onClick={onClick}>
-//         {text}
-//     </button>
-// )
 
 const App = () => {
     // save clicks of each button to its own state
@@ -53,34 +65,33 @@ const App = () => {
     const header1 = 'give feedback'
     const header2 = 'statistics'
 
-
-    const parts = [
+    const stats = [
         {
-            feedback: 'good',
-            count: 6
+            text: 'good',
+            value: good
         },
         {
-            feedback: 'neutral',
-            count: 2
+            text: 'neutral',
+            value: neutral
         },
         {
-            feedback: 'bad',
-            count: 1
+            text: 'bad',
+            value: bad
         }
     ]
 
-    const handleClick = () => {
-
-    }
+    const increaseGood = () => setGood(good + 1)
+    const increaseNeutral = () => setNeutral(neutral + 1)
+    const increaseBad = () => setBad(bad + 1)
 
     return (
         <div>
             <Header header={header1}/>
-            <Button text={"good"}/>
-            <Button text={"neutral"}/>
-            <Button text={"bad"}/>
+            <Button handleClick={increaseGood} text='good' />
+            <Button handleClick={increaseNeutral} text='neutral' />
+            <Button handleClick={increaseBad} text='bad' />
             <Header header={header2}/>
-            <Content parts={parts} />
+            <Statistics stats={stats} />
         </div>
     )
 }
