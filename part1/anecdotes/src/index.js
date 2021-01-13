@@ -9,18 +9,31 @@ const Button = (props) => {
     )
 }
 
+const Votes = (props) => {
+    return (
+        <div>
+            has {props.votes} votes
+        </div>
+    )
+}
+
 const App = (props) => {
     const [selected, setSelected] = useState(0)
-    const max = 5
+    const max = 6
 
     const getRandomInt = () => {
         setSelected(Math.floor(Math.random() * Math.floor(max)))
     }
 
+    const incrementCount = () => {
+        props.votes[selected] += 1
+    }
+
     return (
         <div>
             {props.anecdotes[selected]}
-            <br />
+            <Votes votes={props.votes[selected]}/>
+            <Button handleClick={incrementCount} text='vote' />
             <Button handleClick={getRandomInt} text='next anecdote' />
         </div>
     )
@@ -35,7 +48,9 @@ const anecdotes = [
     'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
 
+const votes = new Array(6).fill(0)
+
 ReactDOM.render(
-    <App anecdotes={anecdotes} />,
+    <App anecdotes={anecdotes} votes={votes}/>,
     document.getElementById('root')
 )
