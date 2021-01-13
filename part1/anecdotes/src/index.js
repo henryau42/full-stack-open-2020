@@ -10,9 +10,11 @@ const Button = (props) => {
 }
 
 const Vote = (props) => {
+    const vote = props.vote > 0 ? props.vote : 0
+
     return (
         <div>
-            has {props.vote > 0 ? props.vote: 0} votes
+            has {vote} votes
         </div>
     )
 }
