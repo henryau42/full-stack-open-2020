@@ -19,6 +19,21 @@ const Vote = (props) => {
     )
 }
 
+const Header = (props) => {
+    return (
+        <h1>{props.header}</h1>
+    )
+}
+
+const Popular = (props) => {
+
+    const highest = props.findMax(props.votes)
+
+    return (
+        <p>{props.anecdotes[highest]}</p>
+    )
+}
+
 const App = (props) => {
     const [selected, setSelected] = useState(0)
     const [votes, setVote] = useState([])
@@ -29,16 +44,35 @@ const App = (props) => {
     }
 
     const incrementCount = () => {
-        props.votes[selected] += 1
-        setVote([...props.votes])
+        props.voteCount[selected] += 1
+        setVote([...props.voteCount])
+    }
+
+    const findMax = (array) => {
+        let max = 0,
+            length = array.length,
+            counter,
+            maxIndex = 0
+
+        for (counter=0; counter<length; counter++) {
+            if (array[counter] > max) {
+                max = array[counter]
+                maxIndex = counter
+            }
+        }
+
+        return (maxIndex)
     }
 
     return (
         <div>
+            <Header header={'Anecdote of the day'} />
             {props.anecdotes[selected]}
             <Vote vote={votes[selected]}/>
             <Button handleClick={incrementCount} text='vote' />
             <Button handleClick={getRandomInt} text='next anecdote' />
+            <Header header={'Anecdote with most votes'} />
+            <Popular findMax={findMax} anecdotes={props.anecdotes} votes={votes} />
         </div>
     )
 }
@@ -52,9 +86,9 @@ const anecdotes = [
     'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
 
-const votes = new Array(6).fill(0)
+const voteCount = new Array(6).fill(0)
 
 ReactDOM.render(
-    <App anecdotes={anecdotes} votes={votes}/>,
+    <App anecdotes={anecdotes} voteCount={voteCount}/>,
     document.getElementById('root')
 )
