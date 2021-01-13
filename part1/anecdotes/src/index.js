@@ -9,16 +9,17 @@ const Button = (props) => {
     )
 }
 
-const Votes = (props) => {
+const Vote = (props) => {
     return (
         <div>
-            has {props.votes} votes
+            has {props.vote > 0 ? props.vote: 0} votes
         </div>
     )
 }
 
 const App = (props) => {
     const [selected, setSelected] = useState(0)
+    const [votes, setVote] = useState([])
     const max = 6
 
     const getRandomInt = () => {
@@ -27,12 +28,13 @@ const App = (props) => {
 
     const incrementCount = () => {
         props.votes[selected] += 1
+        setVote([...props.votes])
     }
 
     return (
         <div>
             {props.anecdotes[selected]}
-            <Votes votes={props.votes[selected]}/>
+            <Vote vote={votes[selected]}/>
             <Button handleClick={incrementCount} text='vote' />
             <Button handleClick={getRandomInt} text='next anecdote' />
         </div>
