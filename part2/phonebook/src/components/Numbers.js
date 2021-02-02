@@ -21,7 +21,6 @@ const Names = ({ persons }) => {
     )
 }
 
-
 const Numbers = ({ persons }) => {
     return (
         <div>
