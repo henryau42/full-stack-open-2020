@@ -1,9 +1,9 @@
 import React from 'react';
 
-const Name = ({ name }) => {
+const Name = ({ name, number }) => {
     return (
         <div>
-            { name }
+            {name} {number}
         </div>
     )
 }
@@ -11,7 +11,12 @@ const Name = ({ name }) => {
 const Names = ({ persons }) => {
     return (
         <div>
-            {persons.map(person => <Name key={person.name} name={person.name} />)}
+            {persons.map(person => {
+                return (
+                <Name key={person.name} name={person.name} number={person.number} />
+                )
+
+            })}
         </div>
     )
 }

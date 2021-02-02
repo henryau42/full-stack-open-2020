@@ -3,9 +3,10 @@ import Numbers from "./components/Numbers";
 
 const App = () => {
     const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas', number: '000-000-0000' }
     ])
     const [ newName, setNewName ] = useState('')
+    const [ newNumber, setNewNumber ] = useState('')
 
     const addName = (event) => {
         event.preventDefault()
@@ -13,17 +14,23 @@ const App = () => {
         if(checkDuplicate(newName)) {
             alert(`${newName} is already added to phonebook`)
         } else {
-            const nameObject = {
-                name: newName
+            const personObject = {
+                name: newName,
+                number: newNumber
             }
-            setPersons(persons.concat(nameObject))
+            setPersons(persons.concat(personObject))
             setNewName('')
+            setNewNumber('')
         }
 
     }
 
     const handleNameChange = (event) => {
         setNewName(event.target.value);
+    }
+
+    const handleNumberChange = (event) => {
+        setNewNumber(event.target.value);
     }
 
     const checkDuplicate = (newName) => {
@@ -40,6 +47,13 @@ const App = () => {
                     <input
                         value={newName}
                         onChange={handleNameChange}
+                    />
+                </div>
+                <div>
+                    number:
+                    <input
+                        value={newNumber}
+                        onChange={handleNumberChange}
                     />
                 </div>
                 <div>
