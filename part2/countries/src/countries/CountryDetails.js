@@ -15,7 +15,6 @@ const CountryDetails = ({ country }) => {
     axios
       .get('http://api.weatherstack.com/current', {params})
       .then(response => {
-        console.log('Weather Report: ', response.data)
         setWeatherReport(response.data.current)
         setWeatherIcon(response.data.current.weather_icons[0])
       })
