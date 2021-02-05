@@ -1,9 +1,10 @@
 import React from 'react'
+import Button from "./Button";
 
-const Country = ({ name }) => {
+const Country = ({ country, setFilteredCountries }) => {
   return (
     <div>
-      {name}
+      {country.name} <Button country={country} setFilteredCountries={setFilteredCountries} />
     </div>
   )
 }

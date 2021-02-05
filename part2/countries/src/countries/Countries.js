@@ -2,7 +2,7 @@ import React from 'react'
 import Country from "./Country"
 import CountryDetails from "./CountryDetails";
 
-const Countries = ({ countries }) => {
+const Countries = ({ countries, setFilteredCountries }) => {
   if(countries.length === 1) {
     return (
       <div>
@@ -20,7 +20,7 @@ const Countries = ({ countries }) => {
       <div>
         {countries.map(country => {
           return (
-            <Country key={country.name} name={country.name}/>
+            <Country key={country.name} country={country} setFilteredCountries={setFilteredCountries} />
           )
         })}
       </div>

@@ -20,7 +20,7 @@ function App() {
     if(search === '') {
       setFilteredCountries([])
     } else {
-      const filter = countries.filter(country => country.name.toLowerCase().includes(search))
+      const filter = countries.filter(country => country.name.toLowerCase().includes(search.toLowerCase()))
       setFilteredCountries(filter)
     }
     setNewSearch(search);
@@ -33,7 +33,7 @@ function App() {
         value={newSearch}
         onChange={handleSearchChange}
       />
-      <Countries countries={filteredCountries} />
+      <Countries countries={filteredCountries} setFilteredCountries={setFilteredCountries} />
     </div>
   )
 }
