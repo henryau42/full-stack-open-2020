@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from "axios";
+import phonebookService from '../services/phonebook'
 
 const PersonForm = ({ persons, setPersons, newSearch, filteredPersons, setFilteredPersons }) => {
 		const [ newName, setNewName ] = useState('')
@@ -29,11 +29,11 @@ const PersonForm = ({ persons, setPersons, newSearch, filteredPersons, setFilter
 								number: newNumber
 						}
 
-						axios
-							  .post('http://localhost:3001/persons', personObject)
-							  .then(response => {
-									  console.log(response)
-							  })
+						phonebookService
+              .create(personObject)
+              .then(returnedPhonebook => {
+                  console.log(returnedPhonebook)
+              })
 
 						setPersons(persons.concat(personObject))
 						setNewName('')
