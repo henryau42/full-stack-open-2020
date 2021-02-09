@@ -14,33 +14,47 @@ const PersonForm = ({ persons, setPersons, newSearch, filteredPersons, setFilter
 		}
 
 		const checkDuplicate = (newName) => {
-				const duplicate = persons.filter(person => person.name.toLowerCase() === newName.toLowerCase())
-				return duplicate.length > 0
+				const duplicates = persons.filter(person => person.name.toLowerCase() === newName.toLowerCase())
+				return duplicates
 		}
 
 		const addName = (event) => {
 				event.preventDefault()
+        const confirmation = `${newName} is already added to phonebook, replace the old number with a new one?`
+        const duplicates = checkDuplicate(newName)
 
-				if(checkDuplicate(newName)) {
-						alert(`${newName} is already added to phonebook`)
+        const personObject = {
+            name: newName,
+            number: newNumber
+        }
+
+				if(duplicates.length > 0) {
+				    if(window.confirm(confirmation)) {
+                phonebookService.update(duplicates.pop().id, personObject)
+                  .then(returnedNumber => {
+
+                      phonebookService.getAll()
+                        .then(returnedData => {
+                            setPersons(returnedData)
+                            setNewName('')
+                            setNewNumber('')
+                            if(newSearch === '') setFilteredPersons(returnedData)
+                        })
+
+                  })
+            }
 				} else {
-						const personObject = {
-								name: newName,
-								number: newNumber
-						}
-
 						phonebookService
               .create(personObject)
               .then(returnedPhonebook => {
                   console.log(returnedPhonebook)
               })
 
-						setPersons(persons.concat(personObject))
-						setNewName('')
-						setNewNumber('')
-
-						if(newSearch === '') setFilteredPersons(filteredPersons.concat(personObject))
-				}
+            setPersons(persons.concat(personObject))
+            setNewName('')
+            setNewNumber('')
+            if(newSearch === '') setFilteredPersons(filteredPersons.concat(personObject))
+        }
 
 		}
 
