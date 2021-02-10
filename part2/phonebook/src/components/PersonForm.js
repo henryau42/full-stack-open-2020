@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import phonebookService from '../services/phonebook'
 
-const PersonForm = ({ persons, setPersons, newSearch, filteredPersons, setFilteredPersons }) => {
+const PersonForm = ({ persons, setPersons, newSearch, filteredPersons, setFilteredPersons, setNotification }) => {
 		const [ newName, setNewName ] = useState('')
 		const [ newNumber, setNewNumber ] = useState('')
 
@@ -31,13 +31,17 @@ const PersonForm = ({ persons, setPersons, newSearch, filteredPersons, setFilter
 				if(duplicates.length > 0) {
 				    if(window.confirm(confirmation)) {
                 phonebookService.update(duplicates.pop().id, personObject)
-                  .then(returnedNumber => {
-
+                  .then(() => {
                       phonebookService.getAll()
                         .then(returnedData => {
                             setPersons(returnedData)
                             setNewName('')
                             setNewNumber('')
+														setNotification(`Updated ${newName}`)
+														setTimeout(() => {
+															setNotification(null)
+														}, 5000)
+
                             if(newSearch === '') setFilteredPersons(returnedData)
                         })
 
@@ -49,10 +53,14 @@ const PersonForm = ({ persons, setPersons, newSearch, filteredPersons, setFilter
               .then(returnedPhonebook => {
                   console.log(returnedPhonebook)
               })
-
             setPersons(persons.concat(personObject))
             setNewName('')
             setNewNumber('')
+						setNotification(`Added ${newName}`)
+						setTimeout(() => {
+							setNotification(null)
+						}, 5000)
+
             if(newSearch === '') setFilteredPersons(filteredPersons.concat(personObject))
         }
 
