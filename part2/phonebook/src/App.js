@@ -6,10 +6,11 @@ import phonebookService from './services/phonebook'
 import Notification from "./components/Notification";
 
 const App = () => {
-  const [persons, setPersons] = useState([])
+  const [ persons, setPersons ] = useState([])
   const [ filteredPersons, setFilteredPersons ] = useState([])
   const [ newSearch, setNewSearch ] = useState('')
   const [ notification, setNotification ] = useState(null)
+  const [ notificationClass, setNotificationClass ] = useState('notification')
 
   useEffect(() => {
     phonebookService
@@ -23,7 +24,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Notification message={notification} />
+      <Notification message={notification} className={notificationClass}/>
       <Filter
           persons={persons}
           newSearch={newSearch}
@@ -38,9 +39,16 @@ const App = () => {
           filteredPersons={filteredPersons}
           setFilteredPersons={setFilteredPersons}
           setNotification={setNotification}
+          setNotificationClass={setNotificationClass}
       />
       <h2>Numbers</h2>
-      <Persons persons={filteredPersons} setFilteredPersons={setFilteredPersons} />
+      <Persons
+        persons={filteredPersons}
+        setPersons={setPersons}
+        setFilteredPersons={setFilteredPersons}
+        setNotification={setNotification}
+        setNotificationClass={setNotificationClass}
+      />
     </div>
   )
 }

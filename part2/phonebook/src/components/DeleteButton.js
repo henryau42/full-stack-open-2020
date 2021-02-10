@@ -1,19 +1,23 @@
 import React  from 'react'
 import phonebookService from '../services/phonebook'
 
-const DeleteButton = ({ name, id, setFilteredPersons }) => {
+const DeleteButton = ({ name, id, setPersons, setFilteredPersons, setNotification, setNotificationClass }) => {
   const handleClick = () => {
     if (window.confirm(`Delete ${name}?`)) {
       phonebookService
         .deleteNumber(id)
         .then(() => {
-          console.log(`Deleted ${name}`)
-        })
-
-      phonebookService
-        .getAll()
-        .then(persons => {
-          setFilteredPersons(persons)
+          setNotificationClass('notification')
+          setNotification(`Deleted ${name}`)
+          setTimeout(() => {
+            setNotification(null)
+          }, 5000)
+          phonebookService
+            .getAll()
+            .then(persons => {
+              setPersons(persons)
+              setFilteredPersons(persons)
+            })
         })
     }
   }

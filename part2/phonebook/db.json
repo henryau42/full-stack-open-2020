@@ -1,29 +1,19 @@
 {
   "persons": [
     {
-      "name": "Talen Horton-Thorton",
-      "number": "8",
-      "id": 10
-    },
-    {
-      "name": "Alex Caruso",
-      "number": "11",
-      "id": 11
-    },
-    {
-      "name": "Lebron James",
+      "name": "Michael Jordan",
       "number": "23",
-      "id": 12
+      "id": 2
     },
     {
       "name": "Kobe Bryant",
-      "number": "24",
-      "id": 13
+      "number": "87u",
+      "id": 3
     },
     {
-      "name": "Michael Jordan",
-      "number": "987",
-      "id": 14
+      "name": "Alex Caruso",
+      "number": "0",
+      "id": 4
     }
   ]
 }

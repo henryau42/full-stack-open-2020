@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import phonebookService from '../services/phonebook'
 
-const PersonForm = ({ persons, setPersons, newSearch, filteredPersons, setFilteredPersons, setNotification }) => {
+const PersonForm = ({ persons, setPersons, newSearch, filteredPersons, setFilteredPersons, setNotification, setNotificationClass }) => {
 		const [ newName, setNewName ] = useState('')
 		const [ newNumber, setNewNumber ] = useState('')
 
@@ -37,6 +37,7 @@ const PersonForm = ({ persons, setPersons, newSearch, filteredPersons, setFilter
                             setPersons(returnedData)
                             setNewName('')
                             setNewNumber('')
+														setNotificationClass('notification')
 														setNotification(`Updated ${newName}`)
 														setTimeout(() => {
 															setNotification(null)
@@ -46,6 +47,13 @@ const PersonForm = ({ persons, setPersons, newSearch, filteredPersons, setFilter
                         })
 
                   })
+									.catch(error => {
+										setNotificationClass('error')
+										setNotification(`Information of ${newName} has already been removed from server`, "error")
+										setTimeout(() => {
+											setNotification(null)
+										}, 5000)
+									})
             }
 				} else {
 						phonebookService
@@ -56,6 +64,7 @@ const PersonForm = ({ persons, setPersons, newSearch, filteredPersons, setFilter
             setPersons(persons.concat(personObject))
             setNewName('')
             setNewNumber('')
+						setNotificationClass('notification')
 						setNotification(`Added ${newName}`)
 						setTimeout(() => {
 							setNotification(null)
